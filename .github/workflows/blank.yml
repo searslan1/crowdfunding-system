@@ -35,6 +35,14 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: 1.22
+      
+      - name: Install gotestsum
+        run: go install gotest.tools/gotestsum@latest
+  
+      - name: Add Go Bin to PATH
+        run: echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
+  
+  
 
       - name: Generate go.sum file
         run: go mod tidy
