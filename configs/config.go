@@ -30,7 +30,7 @@ type DatabaseConfig struct {
 
 // Config verisini yükler
 func LoadConfig() (*Config, error) {
-	err := godotenv.Load()
+	err := godotenv.Load("../.env")
 	if err != nil {
 		log.Println("⚠️  .env dosyası yüklenemedi, varsayılan ayarlar kullanılıyor.")
 	}
@@ -51,6 +51,7 @@ func LoadConfig() (*Config, error) {
 
 	return config, nil
 }
-/*config: Uygulamanın genel yapılandırmasını ve çevresel parametrelerini tutar. 
-Bu dosya genellikle global ayarları içerir, yani API anahtarları, 
+
+/*config: Uygulamanın genel yapılandırmasını ve çevresel parametrelerini tutar.
+Bu dosya genellikle global ayarları içerir, yani API anahtarları,
 veritabanı bağlantı bilgileri ve uygulamanın genel çalışma koşullarını burada belirleyebilirsiniz.*/

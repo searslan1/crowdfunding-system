@@ -7,11 +7,9 @@ import (
 	"time"
 
 	"KFS_Backend/configs"
-	"KFS_Backend/pkg/logger"
-
-	// Modülleri import et
 	"KFS_Backend/internal/modules/campaign"
 	"KFS_Backend/internal/modules/investment"
+	"KFS_Backend/pkg/logger"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -77,7 +75,8 @@ func RunMigrations() {
 		logger.Info("✅ Veritabanı migrasyonu tamamlandı!")
 	}
 }
-/*database: Veritabanı işlemleri ile ilgili tüm işlevleri yönetir. 
-Yani, veritabanı bağlantılarını açma, migrasyonları çalıştırma ve veritabanı sorguları gibi işlemleri burada yapabilirsiniz. 
-Bu dosya, veritabanı ile ilgili tüm mantığı ve işlemleri içerdiğinden dolayı, 
+
+/*database: Veritabanı işlemleri ile ilgili tüm işlevleri yönetir.
+Yani, veritabanı bağlantılarını açma, migrasyonları çalıştırma ve veritabanı sorguları gibi işlemleri burada yapabilirsiniz.
+Bu dosya, veritabanı ile ilgili tüm mantığı ve işlemleri içerdiğinden dolayı,
 uygulamanın veritabanı ile ilgili kodlarını daha modüler hale getirir.*/
