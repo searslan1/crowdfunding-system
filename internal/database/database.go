@@ -97,8 +97,8 @@ func RunMigrations() {
 	// Diğer tabloları kontrol et
 	mainTables := map[string]interface{}{
 		"auth_users":         &user.AuthUser{},
-		"email_verifications": &user.EmailVerification{},
-		"user_sessions":      &user.UserSession{},
+		// "email_verifications": &user.EmailVerification{},
+		// "user_sessions":      &user.UserSession{},
 		"campaigns":          &campaign.Campaign{},
 		"investments":        &investment.Investment{},
 	}

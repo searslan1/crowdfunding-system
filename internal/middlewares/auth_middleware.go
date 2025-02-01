@@ -2,7 +2,7 @@ package middlewares
 
 import (
 	"strings"
-	"time"
+	// "time"
 
 	"KFS_Backend/configs"
 	"KFS_Backend/internal/modules/user"
@@ -49,18 +49,18 @@ func JWTMiddleware(db *gorm.DB) fiber.Handler {
 		}
 
 		// **📌 Kullanıcının hesabı kilitli mi? (SPK gerekliliği)**
-		var authRecord user.AuthUser
-		if err := db.Where("user_id = ?", claims.UserID).First(&authRecord).Error; err == nil {
-			if authRecord.AccountLockedUntil != nil && time.Now().Before(*authRecord.AccountLockedUntil) {
-				return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"error": "Hesap kilitli, daha sonra tekrar deneyin."})
-			}
-		}
+		// var authRecord user.AuthUser
+		// if err := db.Where("user_id = ?", claims.UserID).First(&authRecord).Error; err == nil {
+		// 	if authRecord.AccountLockedUntil != nil && time.Now().Before(*authRecord.AccountLockedUntil) {
+		// 		return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"error": "Hesap kilitli, daha sonra tekrar deneyin."})
+		// 	}
+		// }
 
-		// **📌 Kullanıcının IP ve cihaz bilgisiyle giriş yapıp yapmadığını kontrol et**
-		var session user.UserSession
-		if err := db.Where("user_id = ? AND ip_address = ? AND device_info = ?", claims.UserID, claims.IP, claims.DeviceID).First(&session).Error; err != nil {
-			return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Yetkisiz cihaz veya IP adresi!"})
-		}
+		// // **📌 Kullanıcının IP ve cihaz bilgisiyle giriş yapıp yapmadığını kontrol et**
+		// var session user.UserSession
+		// if err := db.Where("user_id = ? AND ip_address = ? AND device_info = ?", claims.UserID, claims.IP, claims.DeviceID).First(&session).Error; err != nil {
+		// 	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"error": "Yetkisiz cihaz veya IP adresi!"})
+		// }
 
 		// **📌 Kullanıcının rolünü belirle ve erişim kontrolü yap**
 		c.Locals("userID", claims.UserID)

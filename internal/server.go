@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"KFS_Backend/configs"
-	"KFS_Backend/internal/modules/user"
+	// "KFS_Backend/internal/modules/user"
 	"KFS_Backend/pkg/logger"
 
 	"github.com/gofiber/fiber/v2"
@@ -46,12 +46,12 @@ func StartServer() {
 	}
 
 	// ✅ Kullanıcı Modülü İçin Repository ve Servisleri Başlat
-	userRepo := user.NewUserRepository(DB)
-	userService := user.NewUserService(userRepo)
-	userController := user.NewUserController(userService)
+	// userRepo := user.NewUserRepository(DB)
+	// userService := user.NewUserService(userRepo)
+	// userController := user.NewUserController(userService)
 
 	// ✅ Router'ı yükle (userController ile birlikte)
-	SetupRouter(app, userController)
+	// SetupRouter(app, userController)
 
 	// Sunucuyu çalıştır
 	port := ":" + config.Server.Port
