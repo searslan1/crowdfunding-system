@@ -2,45 +2,44 @@ package service
 
 import (
 	"entrepreneur/model"
-	"entrepreneur/repository"
-
-	"golang.org/x/crypto/bcrypt"
+	"errors"
 )
 
-// EntrepreneurService, girişimci profili işlemlerini yönetir.
+// EntrepreneurService girişimci işlemlerini yönetir
 type EntrepreneurService struct {
-	repo *repository.EntrepreneurRepository
-	
+	repo *model.EntrepreneurRepository
 }
 
-// NewEntrepreneurService, yeni bir EntrepreneurService örneği oluşturur.
-func NewEntrepreneurService(repo *repository.EntrepreneurRepository) *EntrepreneurService {
+// NewEntrepreneurService yeni bir hizmet oluşturur
+func NewEntrepreneurService(repo *model.EntrepreneurRepository) *EntrepreneurService {
 	return &EntrepreneurService{repo: repo}
 }
 
-// HashPassword, verilen şifreyi bcrypt ile hash'ler.
-func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	return string(bytes), err
+// IsEDevletVerified e-Devlet doğrulamasını kontrol eder
+func (s *EntrepreneurService) IsEDevletVerified(userID uint) bool {
+	// SPK Gerekliliği: Burada e-Devlet entegrasyonu ile doğrulama yapılmalıdır
+	// Gerçek entegrasyon sağlandığında, bu fonksiyonun döndüreceği değer gerçek veriye dayanmalıdır
+	return true // Şimdilik varsayılan olarak true dönüyor
 }
 
-// CreateEntrepreneur, yeni bir girişimci profili oluşturur.
-func (s *EntrepreneurService) CreateEntrepreneur(entrepreneur *model.Entrepreneur, rawPassword string) error {
-	// Aynı kullanıcıya ait girişimci profili olup olmadığını kontrol et.
+// GetByUserID belirli bir kullanıcının girişimci profilini getirir
+func (s *EntrepreneurService) GetByUserID(userID uint) (*model.Entrepreneur, error) {
+	return s.repo.GetByUserID(userID)
+}
+
+// Create yeni girişimci profili oluşturur
+func (s *EntrepreneurService) Create(entrepreneur *model.Entrepreneur) error {
+	// Kullanıcının zaten bir girişimci profili olup olmadığını kontrol et
 	existing, _ := s.repo.GetByUserID(entrepreneur.UserID)
 	if existing != nil {
-		return ErrEntrepreneurExists
+		return errors.New("Kullanıcı zaten bir girişimci profiline sahip")
 	}
 
-	// Şifreyi hash'leyelim.
-	hashedPassword, err := HashPassword(rawPassword)
-	if err != nil {
-		return err
-	}
-
-	// Şifreyi girişimci profiline ekleyelim.
-	entrepreneur.BusinessModel = &hashedPassword // Örnek olarak BusinessModel alanına ekledik, uygun bir alan eklemelisin.
-
-	// Profili oluştur.
+	// Girişimci profilini oluştur
 	return s.repo.Create(entrepreneur)
+}
+
+// Update girişimci profilini günceller
+func (s *EntrepreneurService) Update(entrepreneur *model.Entrepreneur) error {
+	return s.repo.Update(entrepreneur)
 }
